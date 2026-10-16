@@ -18,15 +18,21 @@
   - [x] React frontend initialized with Vite, packages installed, build tested (`npm run build` passed)
   - [x] `.gitignore`, root `.env.example`, and `frontend/.env.example` created
 
-- [ ] **Phase 2 — Inspect and acquire dataset**
-  - [ ] Zenodo metadata inspected via API/landing page
-  - [ ] Provenance, licence, and citation recorded in `data/README.md` and `docs/DATASET_CARD.md`
-  - [ ] `scripts/inspect_dataset.py` implemented
+- [x] **Phase 2 — Inspect and acquire dataset**
+  - [x] Zenodo metadata inspected via API/landing page (Zenodo Record 19108517, CC-BY-4.0)
+  - [x] Archive downloaded & verified: `mini_datasets.zip` (23.45 MB, MD5: `5c90bb1dab13780bfb0bacfcd9efc024`, SHA-256: `522bf06571ad003b682727bc28304baf0ca0cfff8ff4d7b45c1e7f402003bed7`)
+  - [x] Provenance, licence, citation, and file statistics recorded in `data/README.md` and `docs/DATASET_CARD.md`
+  - [x] CLI inspection script `scripts/inspect_dataset.py` implemented and verified
+  - [x] Target 3-channel RGB subset (`mini_dataset_3ch`) verified: 750 valid 128x128 TIFF images (150 per class, 0 corrupted)
+  - [x] Inspection report exported to `artifacts/reports/dataset_inspection.json`
 
-- [ ] **Phase 3 — Dataset verification, deduplication, and splits**
-  - [ ] `scripts/verify_dataset.py` implemented (Pillow decode check, corruption report)
-  - [ ] Duplicate audit (SHA-256 and perceptual / grouping checks)
-  - [ ] `scripts/prepare_dataset.py` with deterministic manifest `splits.csv`
+- [x] **Phase 3 — Dataset verification, deduplication, and splits**
+  - [x] Image integrity verified with Pillow (750 / 750 valid, 0 corrupt files)
+  - [x] Duplicate detection performed: 14 exact SHA-256 duplicate clusters detected and quarantined to prevent cross-split leakage
+  - [x] CLI script `scripts/verify_dataset.py` implemented and verified; report written to `artifacts/reports/dataset_verification.json`
+  - [x] CLI script `scripts/prepare_dataset.py` implemented; generated deterministic split manifest `data/processed/splits.csv`
+  - [x] Materialized `train` (527), `val` (109), and `test` (114) splits
+  - [x] Zero duplicate cross-split leakage verified programmatically
 
 - [ ] **Phase 4 — Implement and train CNN baseline (ResNet18)**
   - [ ] Model baseline + transfer learning in `training/model_utils.py`
