@@ -298,7 +298,7 @@ def train_solanaceae_specialist(
         "num_classes": len(classes),
         "class_names": classes,
         "class_metadata": SOLANACEAE_METADATA,
-        "image_size": DEFAULT_IMAGE_SIZE,
+        "image_size": [DEFAULT_IMAGE_SIZE, DEFAULT_IMAGE_SIZE],
         "normalization_mean": [0.485, 0.456, 0.406],
         "normalization_std": [0.229, 0.224, 0.225],
         "best_validation_macro_f1": best_val_f1,
