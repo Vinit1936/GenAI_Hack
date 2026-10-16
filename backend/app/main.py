@@ -173,26 +173,37 @@ async def get_sample_image(class_name: str, crop: str = "auto") -> Response:
     clean_name = class_name.lower().strip()
     crop_key = model_service.resolve_crop_key(crop)
 
+    sample_file = None
+
     sol_dir = Path(f"data/processed_solanaceae/test/{clean_name}")
     maize_dir = Path(f"data/processed/test/{clean_name}")
 
     if crop_key == "solanaceae" and sol_dir.is_dir():
-        sample_dir = sol_dir
+        files = sorted(list(sol_dir.glob("*.tif")) + list(sol_dir.glob("*.jpg")) + list(sol_dir.glob("*.jpeg")))
+        if files:
+            sample_file = files[0]
     elif crop_key == "maize" and maize_dir.is_dir():
-        sample_dir = maize_dir
+        files = sorted(list(maize_dir.glob("*.tif")) + list(maize_dir.glob("*.jpg")) + list(maize_dir.glob("*.jpeg")))
+        if files:
+            sample_file = files[0]
     elif sol_dir.is_dir():
-        sample_dir = sol_dir
+        files = sorted(list(sol_dir.glob("*.tif")) + list(sol_dir.glob("*.jpg")) + list(sol_dir.glob("*.jpeg")))
+        if files:
+            sample_file = files[0]
     elif maize_dir.is_dir():
-        sample_dir = maize_dir
-    else:
+        files = sorted(list(maize_dir.glob("*.tif")) + list(maize_dir.glob("*.jpg")) + list(maize_dir.glob("*.jpeg")))
+        if files:
+            sample_file = files[0]
+
+    if not sample_file:
+        demo_dir = Path("demo_test_images")
+        if demo_dir.is_dir():
+            matching = [f for f in sorted(demo_dir.glob("*.jpg")) if clean_name in f.name.lower()]
+            if matching:
+                sample_file = matching[0]
+
+    if not sample_file:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"No samples for class '{clean_name}'.")
-
-    # Match .tif or .jpg/.jpeg
-    files = sorted(list(sample_dir.glob("*.tif")) + list(sample_dir.glob("*.jpg")) + list(sample_dir.glob("*.jpeg")))
-    if not files:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"No test files found for '{clean_name}'.")
-
-    sample_file = files[0]
     with Image.open(sample_file) as img:
         buf = io.BytesIO()
         img.convert("RGB").save(buf, format="JPEG", quality=95)
