@@ -1,0 +1,517 @@
+/* ==========================================================================
+   CropCare Hero Section Styles (/homepage)
+   Matches the design reference image with full-viewport background video
+   ========================================================================== */
+
+/* Full Viewport Hero Section */
+.cropcare-hero {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  min-height: 650px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+  background-color: #f7f4ec;
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #17281b;
+  box-sizing: border-box;
+}
+
+.cropcare-hero * {
+  box-sizing: border-box;
+}
+
+/* Background Video with Poster Fallback */
+.cropcare-hero .hero-video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cropcare-hero .hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+  display: block;
+}
+
+/* Subtle atmospheric overlay protecting natural artwork luminosity */
+.cropcare-hero .hero-video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at 50% 28%,
+    rgba(255, 253, 246, 0.12) 0%,
+    rgba(255, 253, 246, 0) 65%
+  ),
+  linear-gradient(
+    180deg,
+    rgba(255, 252, 242, 0.08) 0%,
+    rgba(22, 36, 23, 0.04) 100%
+  );
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Top Navigation
+   ========================================================================== */
+
+.cropcare-hero .hero-navbar {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2.2rem 4.5rem 1rem 4.5rem;
+}
+
+@media (min-width: 1400px) {
+  .cropcare-hero .hero-navbar {
+    padding: 2.5rem 6rem 1rem 6rem;
+  }
+}
+
+/* Brand Logo (Left) */
+.cropcare-hero .navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  cursor: pointer;
+  color: #17281b;
+}
+
+.cropcare-hero .brand-leaf-icon {
+  width: 25px;
+  height: 25px;
+  color: #17281b;
+  transition: transform 0.25s ease;
+}
+
+.cropcare-hero .navbar-brand:hover .brand-leaf-icon {
+  transform: rotate(-6deg) scale(1.05);
+}
+
+.cropcare-hero .brand-name {
+  font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
+  font-size: 1.55rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: #17281b;
+  line-height: 1;
+}
+
+/* Center Links */
+.cropcare-hero .navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 2.4rem;
+}
+
+.cropcare-hero .nav-item {
+  font-size: 0.94rem;
+  font-weight: 500;
+  color: #243526;
+  text-decoration: none;
+  transition: color 0.18s ease, transform 0.18s ease;
+  cursor: pointer;
+}
+
+.cropcare-hero .nav-item:hover {
+  color: #17281b;
+  transform: translateY(-1px);
+}
+
+.cropcare-hero .nav-item-active {
+  color: #17281b;
+  font-weight: 600;
+}
+
+/* Right Actions */
+.cropcare-hero .navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.cropcare-hero .btn-login {
+  background: transparent;
+  border: none;
+  color: #1f3121;
+  font-size: 0.94rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.5rem 0.6rem;
+  transition: color 0.18s ease;
+}
+
+.cropcare-hero .btn-login:hover {
+  color: #0b150d;
+}
+
+.cropcare-hero .btn-get-started {
+  background: #172b1b;
+  color: #f7f6ef;
+  border: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+  padding: 0.62rem 1.4rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(23, 43, 27, 0.18);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cropcare-hero .btn-get-started:hover {
+  background: #0f1d12;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(23, 43, 27, 0.28);
+}
+
+.cropcare-hero .mobile-menu-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  color: #17281b;
+  cursor: pointer;
+  padding: 0.4rem;
+}
+
+/* ==========================================================================
+   Central Hero Content
+   ========================================================================== */
+
+.cropcare-hero .hero-content-wrapper {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: clamp(1.8rem, 4.5vh, 4rem);
+}
+
+.cropcare-hero .hero-headline-container {
+  max-width: 720px;
+}
+
+/* Exact Two-Line Heading */
+.cropcare-hero .hero-heading {
+  font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  line-height: 1.14;
+  letter-spacing: -0.018em;
+  margin-bottom: 0.95rem;
+}
+
+.cropcare-hero .heading-line-1 {
+  font-size: clamp(2.35rem, 4.2vw, 3.9rem);
+  font-weight: 600;
+  color: #17281b;
+}
+
+.cropcare-hero .heading-line-2 {
+  font-size: clamp(2.35rem, 4.2vw, 3.9rem);
+  font-weight: 600;
+  color: #385c36;
+}
+
+/* Supporting Copy */
+.cropcare-hero .hero-supporting-text {
+  font-size: clamp(0.96rem, 1.2vw, 1.08rem);
+  line-height: 1.55;
+  color: #374639;
+  max-width: 530px;
+  margin: 0 auto clamp(1.6rem, 3vh, 2.3rem) auto;
+  font-weight: 400;
+}
+
+/* ==========================================================================
+   Glassmorphic Crop Upload & AI Chat Bar
+   ========================================================================== */
+
+.cropcare-hero .composer-glass-card {
+  width: clamp(340px, 92vw, 640px);
+  min-height: unset;
+  border-radius: 26px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.42) 0%,
+    rgba(255, 255, 255, 0.20) 100%
+  );
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow:
+    0 16px 36px -8px rgba(18, 38, 22, 0.12),
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -1px 1px 0 rgba(255, 255, 255, 0.25);
+  padding: 0.95rem 1.25rem 0.85rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.45rem;
+  position: relative;
+  transition: all 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cropcare-hero .composer-glass-card:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.48) 0%,
+    rgba(255, 255, 255, 0.25) 100%
+  );
+  border-color: rgba(255, 255, 255, 0.78);
+  box-shadow:
+    0 20px 42px -8px rgba(18, 38, 22, 0.16),
+    0 3px 10px rgba(0, 0, 0, 0.05),
+    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.92);
+}
+
+.cropcare-hero .composer-glass-card:focus-within {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.54) 0%,
+    rgba(255, 255, 255, 0.30) 100%
+  );
+  border-color: rgba(255, 255, 255, 0.92);
+  box-shadow:
+    0 22px 48px -8px rgba(18, 38, 22, 0.20),
+    0 0 0 3px rgba(255, 255, 255, 0.25),
+    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.95);
+}
+
+/* Prompt / Input Area */
+.cropcare-hero .composer-input-area {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.cropcare-hero .composer-input-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  min-height: 28px;
+}
+
+.cropcare-hero .composer-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: 1.02rem;
+  line-height: 1.4;
+  color: #17281b;
+  padding: 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* Animated Suggestions with Typewriter & Backwards-Fade Transition */
+.cropcare-hero .animated-placeholder {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  color: #3b4e3d;
+  font-size: 1.02rem;
+  line-height: 1.4;
+  font-weight: 400;
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  transform-origin: left center;
+  transform: translateY(-50%) scale(1);
+  opacity: 0.94;
+  filter: blur(0px);
+  transition: opacity 0.42s cubic-bezier(0.2, 0.8, 0.2, 1),
+              transform 0.42s cubic-bezier(0.2, 0.8, 0.2, 1),
+              filter 0.42s cubic-bezier(0.2, 0.8, 0.2, 1);
+  z-index: 1;
+}
+
+.cropcare-hero .animated-placeholder.typing-active {
+  opacity: 0.94;
+  transform: translateY(-50%) scale(1);
+  filter: blur(0px);
+}
+
+.cropcare-hero .animated-placeholder.fading-backwards {
+  opacity: 0;
+  transform: translateY(-50%) scale(0.92);
+  filter: blur(4px);
+}
+
+.cropcare-hero .typewriter-cursor {
+  display: inline-block;
+  margin-left: 2px;
+  font-weight: 300;
+  color: #1a2f1e;
+  animation: cursorBlink 0.8s ease-in-out infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Bottom Controls Row */
+.cropcare-hero .composer-controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.2rem;
+}
+
+/* Upload Circle Button (Bottom Left) */
+.cropcare-hero .upload-control-group {
+  display: flex;
+  align-items: center;
+}
+
+.cropcare-hero .upload-circle-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #17281b;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cropcare-hero .upload-circle-btn:hover {
+  transform: scale(1.07);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  background: #ffffff;
+}
+
+/* Ask AI Pill Button (Bottom Right) */
+.cropcare-hero .action-control-group {
+  display: flex;
+  align-items: center;
+}
+
+.cropcare-hero .ask-ai-pill-btn {
+  background: #172b1b;
+  color: #ffffff;
+  border: none;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.55rem 1.45rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(23, 43, 27, 0.2);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cropcare-hero .ask-ai-pill-btn:hover {
+  background: #0f1d12;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(23, 43, 27, 0.3);
+}
+
+/* Switcher Banner on /homepage */
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .cropcare-hero .hero-navbar {
+    padding: 1.5rem 2rem 1rem 2rem;
+  }
+
+  .cropcare-hero .navbar-nav {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .cropcare-hero .hero-navbar {
+    padding: 1.2rem 1.25rem;
+  }
+
+  .cropcare-hero .navbar-nav {
+    display: none;
+  }
+
+  .cropcare-hero .hero-content-wrapper {
+    margin-top: 1.2rem;
+    padding: 0 1rem;
+  }
+
+  .cropcare-hero .heading-line-1,
+  .cropcare-hero .heading-line-2 {
+    font-size: 2.2rem;
+  }
+
+  .cropcare-hero .hero-supporting-text {
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .cropcare-hero .composer-glass-card {
+    border-radius: 20px;
+    padding: 0.75rem 1rem 0.7rem 1rem;
+    min-height: unset;
+  }
+
+  .cropcare-hero .composer-input,
+  .cropcare-hero .animated-placeholder {
+    font-size: 0.94rem;
+  }
+
+  .cropcare-hero .upload-circle-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .cropcare-hero .ask-ai-pill-btn {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.86rem;
+  }
+
+  .cropcare-hero .btn-login {
+    display: none;
+  }
+}
