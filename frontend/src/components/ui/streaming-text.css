@@ -1,0 +1,65 @@
+/* ==========================================================================
+   StreamingText Styles (@kobra/streaming-text)
+   Progressive token streaming and cursor animation
+   ========================================================================== */
+
+.streaming-text-container {
+  display: block;
+  width: 100%;
+  position: relative;
+  line-height: 1.55;
+  color: inherit;
+}
+
+.streaming-text-container p {
+  margin: 0 0 0.65rem 0;
+  line-height: 1.55;
+}
+
+.streaming-text-container p:last-child {
+  margin-bottom: 0;
+}
+
+.streaming-text-container .bubble-heading {
+  margin: 0.85rem 0 0.45rem 0;
+  font-size: 1.05rem;
+  color: #152d21;
+}
+
+.streaming-text-container .bubble-list {
+  margin: 0.4rem 0 0.75rem 1.25rem;
+  padding: 0;
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+.streaming-text-container .bubble-list li {
+  margin-bottom: 0.35rem;
+}
+
+/* Streaming Leading Cursor */
+.streaming-cursor {
+  display: inline-block;
+  margin-left: 3px;
+  vertical-align: baseline;
+  font-weight: 600;
+  font-size: 0.85em;
+  color: #1e382b;
+  opacity: 0.85;
+  animation: streamingBlink 0.75s ease-in-out infinite;
+}
+
+@keyframes streamingBlink {
+  0%, 100% {
+    opacity: 0.95;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+.fade-stream {
+  transition: opacity 0.1s ease;
+}

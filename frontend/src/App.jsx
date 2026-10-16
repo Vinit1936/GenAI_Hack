@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ImageUploader from './components/ImageUploader';
 import PredictionResult from './components/PredictionResult';
+import CropCareHero from './components/CropCareHero';
+import CropCareChatWelcome from './components/CropCareChatWelcome';
 import { getHealthStatus, predictCropImage, fetchSampleImage } from './api';
 import './App.css';
 
@@ -16,13 +18,29 @@ const SUPPORTED_DEMO_SAMPLES = [
 ];
 
 export default function App() {
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
   const [selectedFile, setSelectedFile] = useState(null);
   const [prediction, setPrediction] = useState(null);
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState(null);
   const [healthStatus, setHealthStatus] = useState({ online: false, modelLoaded: false });
 
-  // Check backend health on mount
+  // Handle URL history changes
+  useEffect(() => {
+    const handlePopState = () => {
+      setCurrentPath(window.location.pathname);
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const navigateTo = (path) => {
+    window.history.pushState({}, '', path);
+    setCurrentPath(path);
+    window.scrollTo(0, 0);
+  };
+
+  // Check backend health on mount for the functional app
   useEffect(() => {
     let ignore = false;
     getHealthStatus()
@@ -47,6 +65,28 @@ export default function App() {
     };
   }, []);
 
+  // Dynamic page title based on active route
+  useEffect(() => {
+    if (currentPath === '/homepage' || currentPath === '/homepage/') {
+      document.title = 'CropCare — Healthier Crops, Brighter Tomorrows';
+    } else if (currentPath === '/chat' || currentPath === '/chat/') {
+      document.title = 'CropCare — Chat with CropCare';
+    } else {
+      document.title = 'FarmWatch — AI Crop Condition & Water Stress Classifier';
+    }
+  }, [currentPath]);
+
+  // If user visits /chat, render the static CropCare chat welcome page
+  if (currentPath === '/chat' || currentPath === '/chat/') {
+    return <CropCareChatWelcome />;
+  }
+
+  // If user visits /homepage, render the static CropCare hero section
+  if (currentPath === '/homepage' || currentPath === '/homepage/') {
+    return <CropCareHero onNavigateToApp={() => navigateTo('/')} />;
+  }
+
+  // Handlers for the fully functional crop disease detection app at /
   const handleImageSelected = (file) => {
     setSelectedFile(file);
     setPrediction(null);
