@@ -1,0 +1,84 @@
+# FarmWatch — Implementation Status
+
+## Phase Checklist
+
+- [x] **Phase 0 — Inspect workspace before editing**
+  - Workspace inspected: clean git repo (`main` branch), untracked `steps.md`.
+  - Python versions detected: 3.13.1 (default) and 3.11 (`py -3.11`). Selected Python 3.11 for PyTorch ecosystem compatibility.
+  - Node & npm verified: Node v24.21.0, npm 11.17.0.
+  - Project directory structure initialized.
+  - Status tracker and initial work log created.
+
+- [x] **Phase 1 — Python/Node setup and dependency files**
+  - [x] Virtual environment `.venv` created with Python 3.11 (`3.11.9`)
+  - [x] `requirements.txt` and `requirements-dev.txt` created and dependencies installed
+  - [x] PyTorch + Torchvision verified (`torch 2.14.1+cpu`, `torchvision 0.29.1+cpu`, CUDA available: False)
+  - [x] Core dependencies verified (`fastapi 0.143.2`, `pillow 12.3.0`, `scikit-learn 1.9.1`, `numpy 2.4.6`, `matplotlib 3.11.2`)
+  - [x] Dev dependencies verified (`pytest 9.1.1`, `ruff 0.17.1`)
+  - [x] React frontend initialized with Vite, packages installed, build tested (`npm run build` passed)
+  - [x] `.gitignore`, root `.env.example`, and `frontend/.env.example` created
+
+- [ ] **Phase 2 — Inspect and acquire dataset**
+  - [ ] Zenodo metadata inspected via API/landing page
+  - [ ] Provenance, licence, and citation recorded in `data/README.md` and `docs/DATASET_CARD.md`
+  - [ ] `scripts/inspect_dataset.py` implemented
+
+- [ ] **Phase 3 — Dataset verification, deduplication, and splits**
+  - [ ] `scripts/verify_dataset.py` implemented (Pillow decode check, corruption report)
+  - [ ] Duplicate audit (SHA-256 and perceptual / grouping checks)
+  - [ ] `scripts/prepare_dataset.py` with deterministic manifest `splits.csv`
+
+- [ ] **Phase 4 — Implement and train CNN baseline (ResNet18)**
+  - [ ] Model baseline + transfer learning in `training/model_utils.py`
+  - [ ] Training script `training/train.py` with validation macro F1 checkpointing
+  - [ ] Training history and curves exported
+
+- [ ] **Phase 5 — Evaluate trained checkpoint**
+  - [ ] `training/evaluate.py` with held-out test evaluation
+  - [ ] Macro F1, confusion matrix, per-class metrics report exported
+
+- [ ] **Phase 6 — Inference service (FastAPI backend)**
+  - [ ] `backend/app/model_service.py` with strict checkpoint loader and preprocessing
+  - [ ] Schemas, config, error handling, CORS in `backend/app/`
+  - [ ] Endpoints: `/health`, `/api/classes`, `/api/predict`
+
+- [ ] **Phase 7 — React frontend**
+  - [ ] Clean, responsive UI with deep green/sage theme
+  - [ ] Drag-and-drop uploader, image preview, reset action
+  - [ ] Prediction card, probability distribution, confidence/disclaimer banners
+  - [ ] Integration with backend API
+
+- [ ] **Phase 8 — End-to-end integration**
+  - [ ] Live communication between Vite frontend and FastAPI backend verified
+  - [ ] Error cases, validation, edge cases tested
+
+- [ ] **Phase 9 — Automated tests and code quality**
+  - [ ] Pytest suite for dataset utils, model loading/inference, and API routes
+  - [ ] Frontend build verification (`npm run build`)
+
+- [ ] **Phase 10 — Documentation and reproducibility**
+  - [ ] Comprehensive `README.md`, `docs/MODEL_CARD.md`, `docs/DATASET_CARD.md`, `docs/DECISIONS.md`
+
+- [ ] **Phase 11 — Deployment readiness**
+  - [ ] Frontend production build & backend deployment configurations documented
+
+- [ ] **Phase 12 — Optional enhancements**
+  - [ ] Grad-CAM visualization
+  - [ ] Model comparisons (MobileNetV3 / EfficientNet-B0)
+
+---
+
+## Internal Work Log
+
+- **2026-10-16**:
+  - Checked working directory `d:\GenAI_Hack`.
+  - Discovered git repo on branch `main` with only `steps.md`.
+  - Detected Node `v24.21.0` and npm `11.17.0`.
+  - Detected Python `3.13.1` and `3.11.9`. Selected Python 3.11 for PyTorch compatibility.
+  - Completed Phase 0 acceptance checks.
+  - Initialized `.venv` using Python 3.11.
+  - Installed PyTorch (CPU), Torchvision, FastAPI, Uvicorn, Pillow, scikit-learn, Matplotlib, Pydantic, pytest, ruff.
+  - Verified Python imports: `torch 2.14.1+cpu`, `torchvision 0.29.1+cpu`, `CUDA: False`, `fastapi`, `PIL`, `sklearn`, `numpy`, `matplotlib`.
+  - Scaffolding of React frontend with Vite in `frontend/`, installed npm packages, and verified production build with `npm run build`.
+  - Created `.gitignore`, root `.env.example`, `frontend/.env.example`, `docs/DATASET_CARD.md`, `docs/MODEL_CARD.md`, and `docs/DECISIONS.md`.
+  - Completed Phase 1 acceptance checks.
