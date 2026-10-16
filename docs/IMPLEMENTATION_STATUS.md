@@ -71,14 +71,14 @@
 ## Internal Work Log
 
 - **2026-10-16**:
-  - Checked working directory `d:\GenAI_Hack`.
-  - Discovered git repo on branch `main` with only `steps.md`.
-  - Detected Node `v24.21.0` and npm `11.17.0`.
-  - Detected Python `3.13.1` and `3.11.9`. Selected Python 3.11 for PyTorch compatibility.
+  - Checked working directory `e:\GenAI_Hack`.
+  - Git repository on branch `main` with `steps.md`.
+  - Detected Node `v24.15.0` and npm `11.17.0`.
+  - Detected Python `3.13.1` and `3.11.9`. Selected Python 3.11 (`py -3.11`) for PyTorch compatibility.
   - Completed Phase 0 acceptance checks.
-  - Initialized `.venv` using Python 3.11.
-  - Installed PyTorch (CPU), Torchvision, FastAPI, Uvicorn, Pillow, scikit-learn, Matplotlib, Pydantic, pytest, ruff.
+  - Initialized `.venv` using Python 3.11 (`3.11.9`).
+  - Installed PyTorch (CPU `2.14.1+cpu`), Torchvision (`0.29.1+cpu`), FastAPI (`0.143.3`), Uvicorn (`0.54.0`), Pillow (`12.3.0`), scikit-learn (`1.9.1`), Matplotlib (`3.11.2`), Pydantic (`2.14.1`), pytest (`9.1.1`), ruff (`0.17.1`).
   - Verified Python imports: `torch 2.14.1+cpu`, `torchvision 0.29.1+cpu`, `CUDA: False`, `fastapi`, `PIL`, `sklearn`, `numpy`, `matplotlib`.
-  - Scaffolding of React frontend with Vite in `frontend/`, installed npm packages, and verified production build with `npm run build`.
-  - Created `.gitignore`, root `.env.example`, `frontend/.env.example`, `docs/DATASET_CARD.md`, `docs/MODEL_CARD.md`, and `docs/DECISIONS.md`.
-  - Completed Phase 1 acceptance checks.
+  - Installed npm packages in `frontend/`, verified production build (`npm run build`) and linting (`npm run lint` with oxlint).
+  - Verified `.gitignore`, root `.env.example`, and `frontend/.env.example`.
+  - Completed Phase 1 acceptance checks completely.
