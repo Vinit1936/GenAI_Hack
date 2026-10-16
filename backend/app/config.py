@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     app_name: str = "FarmWatch API"
     app_version: str = "1.0.0"
     model_path: Path = Path(os.getenv("FARMWATCH_MODEL_PATH", "artifacts/models/farmwatch_resnet18.pth"))
+    solanaceae_model_path: Path = Path(os.getenv("FARMWATCH_SOLANACEAE_MODEL_PATH", "artifacts/models/farmwatch_solanaceae_resnet18.pth"))
     frontend_origins: str = os.getenv("FRONTEND_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173")
     max_upload_mb: int = int(os.getenv("MAX_UPLOAD_MB", "10"))
     max_image_pixels: int = int(os.getenv("MAX_IMAGE_PIXELS", "89478485"))  # Pillow default bomb threshold

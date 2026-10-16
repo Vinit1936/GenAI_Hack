@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import ProbabilityList from './ProbabilityList';
 
 const CATEGORY_TAGS = {
@@ -8,7 +8,23 @@ const CATEGORY_TAGS = {
   background: { label: 'Field Background', class: 'tag-bg' },
 };
 
-export default function PredictionResult({ result, onReset }) {
+export default function PredictionResult({ result, originalFile, onReset }) {
+  // Enabled by default so users immediately see explainability visual upon prediction
+  const [showGradCam, setShowGradCam] = useState(true);
+
+  const originalUrl = useMemo(() => {
+    if (!originalFile) return null;
+    return URL.createObjectURL(originalFile);
+  }, [originalFile]);
+
+  useEffect(() => {
+    return () => {
+      if (originalUrl) {
+        URL.revokeObjectURL(originalUrl);
+      }
+    };
+  }, [originalUrl]);
+
   if (!result) return null;
 
   const {
@@ -25,6 +41,7 @@ export default function PredictionResult({ result, onReset }) {
     probabilities,
     interpretation,
     model_version,
+    gradcam_image,
   } = result;
 
   const tag = CATEGORY_TAGS[category_type] || { label: category_type, class: 'tag-generic' };
@@ -101,6 +118,64 @@ export default function PredictionResult({ result, onReset }) {
         <h4 className="interpretation-heading">Agronomic Interpretation</h4>
         <p className="interpretation-text">{interpretation}</p>
       </div>
+
+      {gradcam_image && (
+        <div className="gradcam-card">
+          <div
+            className="gradcam-header"
+            onClick={() => setShowGradCam(!showGradCam)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                setShowGradCam(!showGradCam);
+              }
+            }}
+          >
+            <div className="gradcam-title-group">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="3" />
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+              </svg>
+              <span>Explainable AI: Attention Heatmap (Grad-CAM)</span>
+            </div>
+            <button
+              type="button"
+              className="gradcam-toggle-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowGradCam(!showGradCam);
+              }}
+            >
+              {showGradCam ? 'Hide Heatmap' : 'View Heatmap'}
+            </button>
+          </div>
+
+          {showGradCam && (
+            <div className="gradcam-body">
+              <div className="gradcam-visual-comparison">
+                {originalUrl && (
+                  <div className="visual-pane">
+                    <span className="pane-label">Original Input Photo</span>
+                    <div className="pane-img-wrap">
+                      <img src={originalUrl} alt="Original crop foliage" className="pane-img" />
+                    </div>
+                  </div>
+                )}
+                <div className="visual-pane">
+                  <span className="pane-label">AI Attention Heatmap</span>
+                  <div className="pane-img-wrap heatmap-highlight">
+                    <img src={gradcam_image} alt="Grad-CAM visual attribution overlay" className="pane-img" />
+                  </div>
+                </div>
+              </div>
+              <p className="gradcam-caption">
+                <strong>Attribution Heatmap (ResNet-18 layer4):</strong> Warmer colors (red/orange) highlight the specific foliar regions that drove the model to predict <strong>{display_name}</strong>.
+              </p>
+            </div>
+          )}
+        </div>
+      )}
 
       <ProbabilityList probabilities={probabilities} predictedClass={predicted_class} />
 

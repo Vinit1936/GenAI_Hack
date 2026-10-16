@@ -51,6 +51,7 @@ class PredictionResponse(BaseModel):
     probabilities: Dict[str, float] = Field(..., description="Probabilities for each class in checkpoint order")
     interpretation: str = Field(..., description="Cautious agronomic explanation of the result")
     model_version: str = Field(..., description="Model artifact version")
+    gradcam_image: Optional[str] = Field(None, description="Base64 encoded Grad-CAM attribution overlay image")
     notice: str = Field(
         default="AI image classification estimate based on maize training dataset. Not a confirmed agricultural diagnosis.",
         description="Standard medical/agricultural disclaimer",

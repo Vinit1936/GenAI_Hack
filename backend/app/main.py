@@ -93,14 +93,15 @@ async def health_check() -> HealthResponse:
 
 
 @app.get("/api/classes", response_model=ClassesResponse)
-async def list_classes() -> ClassesResponse:
-    """Returns canonical classes, display names, and category descriptions."""
-    classes = []
-    # If model is loaded, use exact checkpoint classes order; otherwise use default metadata order
-    class_keys = model_service.class_names if model_service.is_loaded else list(CLASS_METADATA.keys())
+async def list_classes(crop: str = "maize") -> ClassesResponse:
+    """Returns canonical classes, display names, and category descriptions for the specified crop."""
+    crop_key = model_service.resolve_crop_key(crop)
+    class_keys = model_service.get_classes(crop_key)
+    metadata_catalog = model_service.get_metadata_catalog(crop_key)
 
+    classes = []
     for k in class_keys:
-        meta = CLASS_METADATA.get(k, {"display_name": k, "category_type": "unknown", "description": "Class category"})
+        meta = metadata_catalog.get(k, {"display_name": k, "category_type": "unknown", "description": "Class category"})
         classes.append(ClassInfo(
             canonical_name=k,
             display_name=meta["display_name"],
@@ -109,7 +110,7 @@ async def list_classes() -> ClassesResponse:
             disease_name=meta.get("disease_name"),
             scientific_name=meta.get("scientific_name"),
             pathogen_type=meta.get("pathogen_type"),
-            host_crop=meta.get("host_crop", "Maize / Corn (Zea mays)"),
+            host_crop=meta.get("host_crop", "Maize / Corn (Zea mays)" if crop_key == "maize" else "Nightshade (Solanaceae)"),
             symptoms=meta.get("symptoms"),
         ))
 
@@ -125,8 +126,11 @@ async def list_classes() -> ClassesResponse:
         503: {"description": "Model checkpoint not loaded"},
     },
 )
-async def predict_image(file: UploadFile = File(..., description="Uploaded image file (JPEG or PNG)")) -> PredictionResponse:
-    """Classifies an uploaded crop photograph using the loaded PyTorch model."""
+async def predict_image(
+    file: UploadFile = File(..., description="Uploaded image file (JPEG or PNG)"),
+    crop: str = "auto",
+) -> PredictionResponse:
+    """Classifies an uploaded crop photograph using automatic specialist routing or explicit crop domain."""
     if not model_service.is_loaded:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
@@ -151,7 +155,7 @@ async def predict_image(file: UploadFile = File(..., description="Uploaded image
         )
 
     try:
-        result = model_service.predict(content)
+        result = model_service.predict(content, crop=crop)
         return result
     except ValueError as ve:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(ve))
@@ -164,19 +168,32 @@ async def predict_image(file: UploadFile = File(..., description="Uploaded image
 
 
 @app.get("/api/sample/{class_name}")
-async def get_sample_image(class_name: str) -> Response:
-    """Provides a sample image from the held-out test split as standard JPEG for rapid verification."""
+async def get_sample_image(class_name: str, crop: str = "auto") -> Response:
+    """Provides a sample image from held-out test splits as standard JPEG for rapid verification."""
     clean_name = class_name.lower().strip()
-    sample_dir = Path(f"data/processed/test/{clean_name}")
-    if not sample_dir.is_dir():
+    crop_key = model_service.resolve_crop_key(crop)
+
+    sol_dir = Path(f"data/processed_solanaceae/test/{clean_name}")
+    maize_dir = Path(f"data/processed/test/{clean_name}")
+
+    if crop_key == "solanaceae" and sol_dir.is_dir():
+        sample_dir = sol_dir
+    elif crop_key == "maize" and maize_dir.is_dir():
+        sample_dir = maize_dir
+    elif sol_dir.is_dir():
+        sample_dir = sol_dir
+    elif maize_dir.is_dir():
+        sample_dir = maize_dir
+    else:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"No samples for class '{clean_name}'.")
 
-    files = sorted(list(sample_dir.glob("*.tif")))
+    # Match .tif or .jpg/.jpeg
+    files = sorted(list(sample_dir.glob("*.tif")) + list(sample_dir.glob("*.jpg")) + list(sample_dir.glob("*.jpeg")))
     if not files:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"No test files found for '{clean_name}'.")
 
-    # Convert TIFF patch to standard JPEG for universal browser compatibility
-    with Image.open(files[0]) as img:
+    sample_file = files[0]
+    with Image.open(sample_file) as img:
         buf = io.BytesIO()
         img.convert("RGB").save(buf, format="JPEG", quality=95)
         jpeg_bytes = buf.getvalue()

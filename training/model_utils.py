@@ -233,9 +233,10 @@ def save_checkpoint(
 
 
 def load_checkpoint(
-    path: Path, device: torch.device
+    path: Path | str, device: torch.device
 ) -> Tuple[nn.Module, List[str], Dict[str, Any]]:
     """Load and validate FarmWatch checkpoint contract strictly."""
+    path = Path(path)
     if not path.is_file():
         raise FileNotFoundError(f"Checkpoint not found at: {path}")
 

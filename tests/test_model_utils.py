@@ -78,3 +78,17 @@ def test_checkpoint_round_trip(tmp_path):
     assert meta["best_validation_macro_f1"] == 0.88
     assert meta["model_version"] == "0.1.0"
     assert meta["architecture"] == "resnet18"
+
+
+def test_gradcam_overlay():
+    from training.gradcam import generate_gradcam_overlay
+
+    model = build_resnet18(num_classes=5, pretrained=False, dropout=0.2)
+    synthetic_image = Image.new("RGB", (128, 128), color=(40, 160, 60))
+    data_url, heatmap = generate_gradcam_overlay(model, synthetic_image, target_class_idx=1)
+
+    assert data_url.startswith("data:image/jpeg;base64,")
+    assert heatmap.ndim == 2
+    assert heatmap.min() >= 0.0
+    assert heatmap.max() <= 1.0
+

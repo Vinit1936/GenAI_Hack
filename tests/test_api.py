@@ -68,7 +68,7 @@ def test_predict_valid_image(client):
     assert "category_type" in data
     assert "confidence" in data
     assert "probabilities" in data
-    assert len(data["probabilities"]) == 5
+    assert len(data["probabilities"]) in (5, 9)
     # Check that probabilities sum to ~1.0
     prob_sum = sum(data["probabilities"].values())
     assert 0.99 <= prob_sum <= 1.01

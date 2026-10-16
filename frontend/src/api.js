@@ -20,11 +20,12 @@ export async function getHealthStatus() {
 }
 
 /**
- * Fetches class metadata definitions
+ * Fetches class metadata definitions for a given crop domain
+ * @param {string} crop
  */
-export async function getClassDefinitions() {
+export async function getClassDefinitions(crop = 'maize') {
   try {
-    const res = await fetch(`${API_BASE_URL}/api/classes`);
+    const res = await fetch(`${API_BASE_URL}/api/classes?crop=${encodeURIComponent(crop)}`);
     if (!res.ok) {
       throw new Error(`Failed to load classes: HTTP ${res.status}`);
     }
@@ -35,11 +36,12 @@ export async function getClassDefinitions() {
 }
 
 /**
- * Fetches a representative sample image from the test set
+ * Fetches a representative sample image from the test set for a given crop
  * @param {string} className
+ * @param {string} crop
  */
-export async function fetchSampleImage(className) {
-  const res = await fetch(`${API_BASE_URL}/api/sample/${className}`);
+export async function fetchSampleImage(className, crop = 'auto') {
+  const res = await fetch(`${API_BASE_URL}/api/sample/${className}?crop=${encodeURIComponent(crop)}`);
   if (!res.ok) {
     throw new Error(`Could not fetch sample image for ${className}`);
   }
@@ -48,16 +50,17 @@ export async function fetchSampleImage(className) {
 }
 
 /**
- * Submits an image file for AI classification
- * @param {File|Blob} file 
+ * Submits an image file for AI classification with the selected crop specialist
+ * @param {File|Blob} file
+ * @param {string} crop
  */
-export async function predictCropImage(file) {
+export async function predictCropImage(file, crop = 'auto') {
   const formData = new FormData();
   formData.append('file', file);
 
   try {
     // Note: Do NOT manually set Content-Type header so browser generates multipart boundary
-    const res = await fetch(`${API_BASE_URL}/api/predict`, {
+    const res = await fetch(`${API_BASE_URL}/api/predict?crop=${encodeURIComponent(crop)}`, {
       method: 'POST',
       body: formData,
     });
@@ -77,3 +80,4 @@ export async function predictCropImage(file) {
     throw err;
   }
 }
+
