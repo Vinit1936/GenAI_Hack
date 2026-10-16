@@ -106,6 +106,11 @@ async def list_classes() -> ClassesResponse:
             display_name=meta["display_name"],
             category_type=meta["category_type"],
             description=meta["description"],
+            disease_name=meta.get("disease_name"),
+            scientific_name=meta.get("scientific_name"),
+            pathogen_type=meta.get("pathogen_type"),
+            host_crop=meta.get("host_crop", "Maize / Corn (Zea mays)"),
+            symptoms=meta.get("symptoms"),
         ))
 
     return ClassesResponse(classes=classes)

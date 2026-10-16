@@ -15,6 +15,11 @@ export default function PredictionResult({ result, onReset }) {
     predicted_class,
     display_name,
     category_type,
+    disease_name,
+    scientific_name,
+    pathogen_type,
+    host_crop,
+    symptoms,
     confidence,
     confidence_warning,
     probabilities,
@@ -61,6 +66,34 @@ export default function PredictionResult({ result, onReset }) {
               Results may be ambiguous or outside the dataset distribution. Re-take photo with clearer lighting and focus.
             </p>
           </div>
+        </div>
+      )}
+
+      {disease_name && (
+        <div className={`disease-diagnostic-card ${category_type === 'disease' ? 'is-pathology' : ''}`}>
+          <div className="disease-diagnostic-header">
+            <span className="disease-badge-pill">
+              {category_type === 'disease' ? 'Foliar Disease Identified' : 'Condition Identity'}
+            </span>
+            <span className="crop-pill">Host Crop: {host_crop || 'Maize / Corn (Zea mays)'}</span>
+          </div>
+
+          <div className="disease-name-block">
+            <div className="disease-label-caption">Specific Disease / Condition:</div>
+            <div className="disease-primary-name">{disease_name}</div>
+            {scientific_name && scientific_name !== 'N/A' && (
+              <div className="disease-scientific-name">
+                <strong>Pathogen:</strong> <em>{scientific_name}</em> &bull; <span className="pathogen-type">{pathogen_type}</span>
+              </div>
+            )}
+          </div>
+
+          {symptoms && (
+            <div className="disease-symptoms-block">
+              <span className="disease-symptoms-label">Key Diagnostic Symptoms:</span>
+              <p className="disease-symptoms-text">{symptoms}</p>
+            </div>
+          )}
         </div>
       )}
 

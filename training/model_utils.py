@@ -23,32 +23,57 @@ IMAGENET_MEAN = [0.485, 0.456, 0.406]
 IMAGENET_STD = [0.229, 0.224, 0.225]
 DEFAULT_IMAGE_SIZE = 224
 
-# Class metadata definition
+# Class metadata definition with precise agronomic and disease taxonomy
 CLASS_METADATA = {
     "healthy": {
-        "display_name": "Healthy-looking maize",
+        "display_name": "Healthy Maize Foliage",
         "category_type": "plant_condition",
-        "description": "Image resembles the dataset healthy class; indicates foliage without severe chlorosis or drought.",
+        "disease_name": "None (Healthy Crop)",
+        "scientific_name": "N/A",
+        "pathogen_type": "None",
+        "host_crop": "Maize / Corn (Zea mays)",
+        "symptoms": "Uniform green canopy with intact chlorophyll distribution, no wilting, and zero lesion development.",
+        "description": "Image resembles healthy maize foliage without visible severe stress, chlorosis, or disease pustules.",
     },
     "low_stress": {
-        "display_name": "Low water-stress class",
+        "display_name": "Mild Water Stress (Early Drought)",
         "category_type": "water_stress",
-        "description": "Image resembles the dataset low water-stress class; early or mild moisture stress symptoms.",
+        "disease_name": "Abiotic Moisture Stress (Mild)",
+        "scientific_name": "N/A (Physiological Drought)",
+        "pathogen_type": "Environmental Deficit",
+        "host_crop": "Maize / Corn (Zea mays)",
+        "symptoms": "Subtle grayish-green leaf tint, upward rolling of leaf margins during peak daylight hours, and slight turgor loss.",
+        "description": "Image resembles early or mild moisture stress in maize crops.",
     },
     "high_stress": {
-        "display_name": "High water-stress class",
+        "display_name": "Severe Water Stress (Acute Drought)",
         "category_type": "water_stress",
-        "description": "Image resembles the dataset high water-stress class; pronounced drought symptoms and wilting.",
+        "disease_name": "Abiotic Moisture Stress (Severe)",
+        "scientific_name": "N/A (Physiological Drought)",
+        "pathogen_type": "Environmental Deficit",
+        "host_crop": "Maize / Corn (Zea mays)",
+        "symptoms": "Pronounced inward leaf rolling (pencil-rolling), tip burning/senescence, and severe canopy wilting.",
+        "description": "Image resembles pronounced drought stress with severe moisture deficit and wilting.",
     },
     "rust": {
-        "display_name": "Rust-disease class",
+        "display_name": "Common Corn Rust (Puccinia sorghi)",
         "category_type": "disease",
-        "description": "Image resembles fungal rust infection on maize foliage; distinct pathology, not water stress.",
+        "disease_name": "Common Corn Rust",
+        "scientific_name": "Puccinia sorghi",
+        "pathogen_type": "Fungal Pathogen (Basidiomycota)",
+        "host_crop": "Maize / Corn (Zea mays)",
+        "symptoms": "Small, circular to elongate golden-brown to cinnamon pustules (uredinia) scattered across both upper and lower leaf surfaces that rupture the epidermis and release powdery spores.",
+        "description": "Foliar fungal infection on maize caused by Puccinia sorghi; distinct pathology characterized by powdery rust pustules.",
     },
     "bare_soil": {
-        "display_name": "Bare-soil/background class",
+        "display_name": "Bare Soil / Ground Background",
         "category_type": "background",
-        "description": "Image resembles bare soil or background; non-foliar field patch.",
+        "disease_name": "Non-Crop Background",
+        "scientific_name": "N/A",
+        "pathogen_type": "None (Non-foliar)",
+        "host_crop": "None (Soil)",
+        "symptoms": "Exposed agricultural earth, tilled soil, or mulch without active crop vegetation.",
+        "description": "Image resembles exposed field ground or soil background; non-crop patch.",
     },
 }
 

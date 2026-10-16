@@ -34,39 +34,42 @@
   - [x] Materialized `train` (527), `val` (109), and `test` (114) splits
   - [x] Zero duplicate cross-split leakage verified programmatically
 
-- [ ] **Phase 4 — Implement and train CNN baseline (ResNet18)**
-  - [ ] Model baseline + transfer learning in `training/model_utils.py`
-  - [ ] Training script `training/train.py` with validation macro F1 checkpointing
-  - [ ] Training history and curves exported
+- [x] **Phase 4 — Implement and train CNN baseline (ResNet18)**
+  - [x] Model baseline + transfer learning in `training/model_utils.py`
+  - [x] Training script `training/train.py` with validation macro F1 checkpointing
+  - [x] Best checkpoint saved to `artifacts/models/farmwatch_resnet18.pth` (Val Macro F1: 0.9460)
+  - [x] Training history (`artifacts/reports/training_history.csv`) and curves (`artifacts/reports/training_curves.png`) exported
 
-- [ ] **Phase 5 — Evaluate trained checkpoint**
-  - [ ] `training/evaluate.py` with held-out test evaluation
-  - [ ] Macro F1, confusion matrix, per-class metrics report exported
+- [x] **Phase 5 — Evaluate trained checkpoint**
+  - [x] `training/evaluate.py` executed on held-out test split (114 samples)
+  - [x] Final Test Metrics: Accuracy 93.86%, Macro Precision 0.9435, Macro Recall 0.9391, Macro F1 0.9376, Test Loss 0.1499
+  - [x] Per-class report (`artifacts/reports/classification_report.csv`), confusion matrix (`artifacts/reports/confusion_matrix.png`), and results JSON (`artifacts/reports/evaluation_results.json`) exported
 
-- [ ] **Phase 6 — Inference service (FastAPI backend)**
-  - [ ] `backend/app/model_service.py` with strict checkpoint loader and preprocessing
-  - [ ] Schemas, config, error handling, CORS in `backend/app/`
-  - [ ] Endpoints: `/health`, `/api/classes`, `/api/predict`
+- [x] **Phase 6 — Inference service (FastAPI backend)**
+  - [x] `backend/app/model_service.py` with strict checkpoint loader, lifespan initialization, and deterministic preprocessing
+  - [x] Schemas, config, error handling, CORS in `backend/app/`
+  - [x] Endpoints verified: `GET /`, `GET /health`, `GET /api/classes`, `POST /api/predict`
 
-- [ ] **Phase 7 — React frontend**
-  - [ ] Clean, responsive UI with deep green/sage theme
-  - [ ] Drag-and-drop uploader, image preview, reset action
-  - [ ] Prediction card, probability distribution, confidence/disclaimer banners
-  - [ ] Integration with backend API
+- [x] **Phase 7 — React frontend**
+  - [x] Clean, responsive UI with deep green/sage agricultural theme in `frontend/src/`
+  - [x] Components implemented: `ImageUploader.jsx`, `PredictionResult.jsx`, `ProbabilityList.jsx`, `api.js`
+  - [x] Production build verified (`npm run build`) and lint verified (`npm run lint` / oxlint: 0 warnings, 0 errors)
 
-- [ ] **Phase 8 — End-to-end integration**
-  - [ ] Live communication between Vite frontend and FastAPI backend verified
-  - [ ] Error cases, validation, edge cases tested
+- [x] **Phase 8 — End-to-end integration**
+  - [x] FastAPI backend inference pipeline integrated with React frontend contract
+  - [x] Safe multipart file handling, corrupted file rejection (400), unsupported MIME validation, and missing file handling (422) verified
 
-- [ ] **Phase 9 — Automated tests and code quality**
-  - [ ] Pytest suite for dataset utils, model loading/inference, and API routes
-  - [ ] Frontend build verification (`npm run build`)
+- [x] **Phase 9 — Automated tests and code quality**
+  - [x] Full pytest test suite passing: 16 passed in 12.57s (`tests/test_api.py`, `tests/test_dataset_utils.py`, `tests/test_model_utils.py`)
+  - [x] Frontend build & lint verified with 0 errors
 
 - [ ] **Phase 10 — Documentation and reproducibility**
-  - [ ] Comprehensive `README.md`, `docs/MODEL_CARD.md`, `docs/DATASET_CARD.md`, `docs/DECISIONS.md`
+  - [ ] Comprehensive root `README.md`
+  - [x] `docs/MODEL_CARD.md`, `docs/DATASET_CARD.md`, `docs/DECISIONS.md` created
+  - [x] `docs/IMPLEMENTATION_STATUS.md` maintained
 
 - [ ] **Phase 11 — Deployment readiness**
-  - [ ] Frontend production build & backend deployment configurations documented
+  - [ ] Production build and hosting deployment steps documented
 
 - [ ] **Phase 12 — Optional enhancements**
   - [ ] Grad-CAM visualization

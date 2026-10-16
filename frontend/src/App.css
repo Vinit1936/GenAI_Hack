@@ -546,6 +546,122 @@
   margin-bottom: 0.2rem;
 }
 
+/* Disease & Condition Diagnostic Card */
+.disease-diagnostic-card {
+  background: #f8faf8;
+  border: 1px solid #d8f3dc;
+  border-left: 4px solid #2d6a4f;
+  border-radius: var(--radius-md);
+  padding: 1.15rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.disease-diagnostic-card.is-pathology {
+  background: #fdf4ff;
+  border: 1px solid #f0abfc;
+  border-left: 4px solid #a21caf;
+}
+
+.disease-diagnostic-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.disease-badge-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.disease-diagnostic-card.is-pathology .disease-badge-pill {
+  background: #fae8ff;
+  color: #86198f;
+}
+
+.crop-pill {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.04);
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+}
+
+.disease-name-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.disease-label-caption {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.disease-primary-name {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-forest);
+  line-height: 1.25;
+}
+
+.disease-diagnostic-card.is-pathology .disease-primary-name {
+  color: #701a75;
+}
+
+.disease-scientific-name {
+  font-size: 0.9rem;
+  color: #4b5563;
+  margin-top: 0.15rem;
+}
+
+.disease-scientific-name em {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.pathogen-type {
+  font-size: 0.82rem;
+  color: #6b7280;
+}
+
+.disease-symptoms-block {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 0.9rem;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.disease-symptoms-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.disease-symptoms-text {
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--text-main);
+  margin: 0;
+}
+
 /* Interpretation */
 .interpretation-box {
   background: #f8faf8;
